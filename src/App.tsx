@@ -1,9 +1,13 @@
 import "./App.css";
+import { WordGrid } from "./components/WordGrid";
 
 function App() {
-  return <>
-  
-  </>;
+  return (
+    <>
+      <h1>Wordle</h1>
+      <WordGrid />
+    </>
+  );
 }
 
 export default App;
