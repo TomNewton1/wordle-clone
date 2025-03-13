@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { render } from "vitest-browser-react";
+import { render } from "@testing-library/react";
 import App from "../App";
 
 test("Wordle title renders", () => {
