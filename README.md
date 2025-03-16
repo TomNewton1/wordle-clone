@@ -9,6 +9,14 @@ Wordle clone FE built with React and TypeScript.
 - Node.js (version 18 or higher)
 - npm
 
+### Using .nvmrc
+
+If you use `nvm` (Node Version Manager), you can run the following command to use the correct Node.js version specified in the `.nvmrc` file:
+
+```bash
+nvm use
+```
+
 ## Getting Started
 
 ### 1. Install Dependencies
