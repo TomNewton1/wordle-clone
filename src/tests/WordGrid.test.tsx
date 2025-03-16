@@ -51,3 +51,42 @@ test("submit button is enabled when current word length is 5", () => {
   const button = screen.getByRole("button", { name: /submit/i });
   expect(button).not.toBeDisabled();
 });
+
+test("submit button is disabled when current word length is less than 5", () => {
+  render(<WordGrid />);
+
+  const button = screen.getByRole("button", { name: /submit/i });
+  expect(button).toBeDisabled();
+});
+
+test("submit button is enabled when current word length is 5", () => {
+  render(<WordGrid />);
+
+  const inputs = screen.getAllByRole("textbox");
+  for (let i = 0; i < 5; i++) {
+    fireEvent.change(inputs[i] as HTMLInputElement, { target: { value: "a" } });
+  }
+
+  const button = screen.getByRole("button", { name: /submit/i });
+  expect(button).not.toBeDisabled();
+});
+
+test("only allows alphabetical characters to be input on keydown", () => {
+  render(<WordGrid />);
+
+  const input = screen.getAllByRole("textbox")[0] as HTMLInputElement;
+
+  fireEvent.keyDown(input, { key: "1" });
+  expect(input.value).toBe("");
+
+  fireEvent.keyDown(input, { key: "!" });
+  expect(input.value).toBe("");
+
+  fireEvent.keyDown(input, { key: "a" });
+  fireEvent.change(input, { target: { value: "a" } });
+  expect(input.value).toBe("A");
+
+  fireEvent.keyDown(input, { key: "B" });
+  fireEvent.change(input, { target: { value: "B" } });
+  expect(input.value).toBe("B");
+});
