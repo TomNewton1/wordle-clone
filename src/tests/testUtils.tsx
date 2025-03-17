@@ -21,8 +21,7 @@ export function renderWithProviders(
     ...renderOptions
   }: ExtendedRenderOptions = {}
 ) {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  const Wrapper = ({ children }: PropsWithChildren<{}>) => (
+  const Wrapper = ({ children }: PropsWithChildren<object>) => (
     <Provider store={store}>{children}</Provider>
   );
 
