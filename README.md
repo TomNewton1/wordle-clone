@@ -35,7 +35,7 @@ Create a `.env` file based based on the provided .env.example
 cp .env.example .env
 ```
 
-Update `.env` file with your environment specific variables.
+Update `.env` file with your environment specific variables if required such as different API url.
 
 ### 3. Run Development Server
 
