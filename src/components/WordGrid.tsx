@@ -1,16 +1,22 @@
-import { useState, useMemo, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store/store";
+import { setGrid } from "../store/gridSlice";
 import "./word-grid.css";
 import axios from "axios";
 
+const WORD_LENGTH = 5;
+
 export const WordGrid = () => {
-  const [grid, setGrid] = useState(Array(30).fill({ letter: "", status: "" }));
-  const [activeWordIndex, setCurrentWordIndex] = useState(0);
+  const dispatch = useDispatch();
+  const grid = useSelector((state: RootState) => state.grid.grid);
+  const [activeWordIndex, setActiveWordIndex] = useState(0);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const handleChange = (index: number, value: string) => {
-    const newGrid = [...grid];
-    newGrid[index] = { ...newGrid[index], letter: value.toUpperCase() };
-    setGrid(newGrid);
+    const updatedGrid = [...grid];
+    updatedGrid[index] = { ...updatedGrid[index], letter: value.toUpperCase() };
+    dispatch(setGrid(updatedGrid));
 
     if (value && index < grid.length - 1) {
       inputRefs.current[index + 1]?.focus();
@@ -31,7 +37,10 @@ export const WordGrid = () => {
   const handleSubmit = async () => {
     try {
       const currentWordLetters = grid
-        .slice(activeWordIndex * 5, (activeWordIndex + 1) * 5)
+        .slice(
+          activeWordIndex * WORD_LENGTH,
+          (activeWordIndex + 1) * WORD_LENGTH
+        )
         .map((cell) => cell.letter)
         .join("");
 
@@ -45,22 +54,22 @@ export const WordGrid = () => {
       const updatedGrid = [...grid];
       response.data.forEach(
         (result: { letter: string; status: string }, index: number) => {
-          updatedGrid[activeWordIndex * 5 + index] = {
+          updatedGrid[activeWordIndex * WORD_LENGTH + index] = {
             letter: result.letter,
             status: result.status,
           };
         }
       );
-      setGrid(updatedGrid);
-      setCurrentWordIndex(activeWordIndex + 1);
+      dispatch(setGrid(updatedGrid));
+      setActiveWordIndex(activeWordIndex + 1);
     } catch (error) {
       console.error(error);
     }
   };
 
   const currentWord = useMemo(() => {
-    const start = activeWordIndex * 5;
-    const end = start + 5;
+    const start = activeWordIndex * WORD_LENGTH;
+    const end = start + WORD_LENGTH;
     return grid
       .slice(start, end)
       .map((cell) => cell.letter)
@@ -78,7 +87,7 @@ export const WordGrid = () => {
             value={cell.letter}
             onChange={(e) => handleChange(index, e.target.value)}
             onKeyDown={handleKeyDown}
-            disabled={Math.floor(index / 5) !== activeWordIndex}
+            disabled={Math.floor(index / WORD_LENGTH) !== activeWordIndex}
             className={cell.status}
             ref={(el) => {
               inputRefs.current[index] = el;
@@ -86,7 +95,10 @@ export const WordGrid = () => {
           />
         ))}
       </div>
-      <button onClick={handleSubmit} disabled={currentWord.length < 5}>
+      <button
+        onClick={handleSubmit}
+        disabled={currentWord.length < WORD_LENGTH}
+      >
         Submit
       </button>
     </div>

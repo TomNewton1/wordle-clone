@@ -1,0 +1,19 @@
+@import url("../components/shared-styles.css");
+
+.letter-tracker {
+  margin-top: 20px;
+}
+
+.letters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.letter {
+  display: inline-block;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}

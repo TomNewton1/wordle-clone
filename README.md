@@ -4,6 +4,8 @@
 
 Wordle clone FE built with React and TypeScript.
 
+This should be run with the following Django API: [https://github.com/TomNewton1/wordle-clone-api](https://github.com/TomNewton1/wordle-clone-api)
+
 ## Prerequisites
 
 - Node.js (version 18 or higher)
