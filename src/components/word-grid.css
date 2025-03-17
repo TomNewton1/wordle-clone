@@ -1,3 +1,5 @@
+@import url("../components/shared-styles.css");
+
 .grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -16,27 +18,4 @@
   border: 2px solid lightgray;
   caret-color: transparent;
   text-transform: uppercase;
-}
-
-/* Styles from nytimes wordle */
-
-/* In word and correct spot */
-.correct {
-  background-color: #6aaa64;
-  color: white;
-  border-color: #6aaa64;
-}
-
-/* In word and not in correct spot */
-.present {
-  background-color: #85c0f9;
-  color: white;
-  border-color: #85c0f9;
-}
-
-/* Not in word */
-.incorrect {
-  background-color: #787c7e;
-  color: white;
-  border-color: #787c7e;
 }
